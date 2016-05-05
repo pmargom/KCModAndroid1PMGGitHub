@@ -3,8 +3,10 @@ package com.ligartolabs.molapizza.activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -35,10 +37,7 @@ public class TableListActivity extends AppCompatActivity {
         mDishes = new LinkedList<>();
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupModel();
+    private void setupUI() {
 
         setContentView(R.layout.activity_table_list);
         mTableListView = (ListView) findViewById(R.id.tables_list);
@@ -46,6 +45,29 @@ public class TableListActivity extends AppCompatActivity {
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mTables);
 
         mTableListView.setAdapter(mAdapter);
+
+        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.table_list_activity_button_add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewTable();
+                Snackbar.make(findViewById(android.R.id.content), "New table was added at the end.", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void addNewTable() {
+        int newId = mTables.getLast().getId() + 1;
+        mTables.add(new Table(newId, new LinkedList<Dish>(), false, 0));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setupModel();
+        setupUI();
 
         downloadMenu();
         downloadTables();
