@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.ligartolabs.molapizza.global.Constants;
 import com.ligartolabs.molapizza.model.Dish;
+import com.ligartolabs.molapizza.model.Restaurant;
 import com.ligartolabs.molapizza.model.Table;
 
 import org.json.JSONArray;
@@ -26,15 +27,12 @@ import com.ligartolabs.molapizza.R;
 
 public class TableListActivity extends AppCompatActivity {
 
-    private LinkedList<Table> mTables;      // active tables in the restaurant currently
     private ArrayAdapter<Table> mAdapter;
+    private Restaurant restaurant;
     private ListView mTableListView;
 
-    private LinkedList<Dish> mDishes;       // list of dishes offered by the restaurant
-
     private void setupModel() {
-        mTables = new LinkedList<>();
-        mDishes = new LinkedList<>();
+        restaurant = Restaurant.getInstance();
     }
 
     private void setupUI() {
@@ -42,7 +40,7 @@ public class TableListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_table_list);
         mTableListView = (ListView) findViewById(R.id.tables_list);
 
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mTables);
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, restaurant.getTables());
 
         mTableListView.setAdapter(mAdapter);
 
@@ -57,8 +55,8 @@ public class TableListActivity extends AppCompatActivity {
     }
 
     private void addNewTable() {
-        int newId = mTables.getLast().getId() + 1;
-        mTables.add(new Table(newId, new LinkedList<Dish>(), false, 0));
+        int newId = restaurant.getTables().getLast().getId() + 1;
+        restaurant.addNewTable(new Table(newId, new LinkedList<Dish>(), false, 0));
         mAdapter.notifyDataSetChanged();
     }
 
@@ -129,9 +127,9 @@ public class TableListActivity extends AppCompatActivity {
                             }
                             dishes.add(new Dish(idDish, name, price, photo, allergens));
                         }
-                        mTables.add(new Table(idTable, dishes, billStatus, bill));
+                        restaurant.addNewTable(new Table(idTable, dishes, billStatus, bill));
                     }
-                    return mTables;
+                    return restaurant.getTables();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -197,7 +195,7 @@ public class TableListActivity extends AppCompatActivity {
 
                     JSONObject jsonData = new JSONObject(sb.toString());
                     JSONArray dishesJSONArray = jsonData.getJSONArray("dishes");
-
+                    LinkedList<Dish> dishes = new LinkedList<>();
                     for (int i = 0; i < dishesJSONArray.length(); i++) {
                         JSONObject dishObject = dishesJSONArray.getJSONObject(i);
                         String name = dishObject.getString("name");
@@ -209,10 +207,10 @@ public class TableListActivity extends AppCompatActivity {
                         for (int k = 0; k < allergensJSONArray.length(); k++) {
                             allergens.add(allergensJSONArray.getString(k));
                         }
-                        mDishes.add(new Dish(id, name, price, photo, allergens));
+                        dishes.add(new Dish(id, name, price, photo, allergens));
                     }
-
-                    return mDishes;
+                    restaurant.setDishes(dishes);
+                    return restaurant.getDishes();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
