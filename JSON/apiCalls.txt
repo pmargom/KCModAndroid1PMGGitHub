@@ -2,9 +2,7 @@ allergens
   http://www.mocky.io/v2/5713a15d1000005a1ba413cc
 
 dishes
-  http://www.mocky.io/v2/5713a486100000d01ba413d2
-  http://10.170.0.185:8000/api/dishes
+  http://www.mocky.io/v2/572b7d36130000da14e2b873
 
 tables
-  http://www.mocky.io/v2/572b21e7130000ed07e2b7cc
-  http://10.170.0.185:8000/api/tables
+  http://www.mocky.io/v2/572b689e130000bd11e2b858

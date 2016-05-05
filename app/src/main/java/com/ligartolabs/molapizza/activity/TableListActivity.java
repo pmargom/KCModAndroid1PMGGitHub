@@ -1,10 +1,9 @@
 package com.ligartolabs.molapizza.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -14,7 +13,6 @@ import com.ligartolabs.molapizza.model.Dish;
 import com.ligartolabs.molapizza.model.Table;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -26,14 +24,21 @@ import com.ligartolabs.molapizza.R;
 
 public class TableListActivity extends AppCompatActivity {
 
-    private LinkedList<Table> mTables;
+    private LinkedList<Table> mTables;      // active tables in the restaurant currently
     private ArrayAdapter<Table> mAdapter;
     private ListView mTableListView;
+
+    private LinkedList<Dish> mDishes;       // list of dishes offered by the restaurant
+
+    private void setupModel() {
+        mTables = new LinkedList<>();
+        mDishes = new LinkedList<>();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTables = new LinkedList<>();
+        setupModel();
 
         setContentView(R.layout.activity_table_list);
         mTableListView = (ListView) findViewById(R.id.tables_list);
@@ -43,11 +48,10 @@ public class TableListActivity extends AppCompatActivity {
         mTableListView.setAdapter(mAdapter);
 
         downloadMenu();
+        downloadTables();
     }
 
-
-
-    private void downloadMenu() {
+    private void downloadTables() {
         AsyncTask<Object, Integer, LinkedList<Table>> menuDownloader = new AsyncTask<Object, Integer, LinkedList<Table>>() {
 
             @Override
@@ -91,15 +95,15 @@ public class TableListActivity extends AppCompatActivity {
                         JSONArray dishesJSONArray = tableObject.getJSONArray("dishes");
                         LinkedList<Dish> dishes = new LinkedList<>();
                         for (int j = 0; j < dishesJSONArray.length(); j++) {
-
-                            String name = dishesJSONArray.getJSONObject(i).getString("name");
-                            double price = dishesJSONArray.getJSONObject(i).getDouble("price");
-                            int idDish = dishesJSONArray.getJSONObject(i).getInt("id");
-                            String photo = dishesJSONArray.getJSONObject(i).getString("photo");
-                            JSONArray allergensJSONArray = dishesJSONArray.getJSONObject(i).getJSONArray("allergens");
+                            JSONObject element = dishesJSONArray.getJSONObject(j);
+                            String name = element.getString("name");
+                            double price = element.getDouble("price");
+                            int idDish = element.getInt("id");
+                            String photo = element.getString("photo");
+                            JSONArray allergensJSONArray = element.getJSONArray("allergens");
                             LinkedList<String> allergens = new LinkedList<>();
                             for (int k = 0; k < allergensJSONArray.length(); k++) {
-                                allergens.add(allergensJSONArray.getString(i));
+                                allergens.add(allergensJSONArray.getString(k));
                             }
                             dishes.add(new Dish(idDish, name, price, photo, allergens));
                         }
@@ -124,30 +128,89 @@ public class TableListActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(LinkedList<Table> tables) {
                 super.onPostExecute(tables);
-                if (tables == null) {
+                /*if (tables.size() == 0) {
+                    Snackbar.make(findViewById(android.R.id.content), "There are no tables active at the moment.", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Active tables downloaded.", Snackbar.LENGTH_LONG).show();
+                }*/
+            }
+        };
 
-                    // Ha habido algún error, se lo indicamos al usuario
-                    /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(t);
-                    alertDialog.setTitle("Error");
-                    alertDialog.setMessage("No se pudo descargar la información del tiempo");
-                    alertDialog.setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            downloadMenu();
-                        }
-                    });
-                    alertDialog.setNegativeButton("Regresar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Esto normalmente no se hace así, se le avisa a la actividad y ella decide
-                            getActivity().finish();
-                        }
-                    });
+        menuDownloader.execute();
+    }
 
-                    // Mostramos el diálogo
-                    alertDialog.show();*/
+    private void downloadMenu() {
+        AsyncTask<Object, Integer, LinkedList<Dish>> menuDownloader = new AsyncTask<Object, Integer, LinkedList<Dish>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected LinkedList<Dish> doInBackground(Object... params) {
+                URL url;
+                InputStream input = null;
+                try {
+                    url = new URL(Constants.DISHES_URI);
+                    HttpURLConnection con = (HttpURLConnection) (url.openConnection());
+                    con.connect();
+                    int responseLength = con.getContentLength();
+                    byte[] data = new byte[1024];
+                    long currentBytes = 0;
+                    int downloadedBytes;
+                    input = con.getInputStream();
+                    StringBuilder sb = new StringBuilder();
+                    while ((downloadedBytes = input.read(data)) != -1) {
+                        if (isCancelled()) {
+                            input.close();
+                            return null;
+                        }
+
+                        sb.append(new String(data, 0, downloadedBytes));
+                        if (responseLength > 0) {
+                            currentBytes += downloadedBytes;
+                        }
+                    }
+
+                    JSONObject jsonData = new JSONObject(sb.toString());
+                    JSONArray dishesJSONArray = jsonData.getJSONArray("dishes");
+
+                    for (int i = 0; i < dishesJSONArray.length(); i++) {
+                        JSONObject dishObject = dishesJSONArray.getJSONObject(i);
+                        String name = dishObject.getString("name");
+                        double price = dishObject.getDouble("price");
+                        int id = dishObject.getInt("id");
+                        String photo = dishObject.getString("photo");
+                        JSONArray allergensJSONArray = dishObject.getJSONArray("allergens");
+                        LinkedList<String> allergens = new LinkedList<>();
+                        for (int k = 0; k < allergensJSONArray.length(); k++) {
+                            allergens.add(allergensJSONArray.getString(k));
+                        }
+                        mDishes.add(new Dish(id, name, price, photo, allergens));
+                    }
+
+                    return mDishes;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                finally {
+                    if (input != null) {
+                        try {
+                            input.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(LinkedList<Dish> dishes) {
+                super.onPostExecute(dishes);
+
+                Snackbar.make(findViewById(android.R.id.content), "Restaurant dish list and active tables downloaded.", Snackbar.LENGTH_LONG).show();
             }
         };
 
