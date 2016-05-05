@@ -1,0 +1,36 @@
+{
+  "total": 9,
+  "allergens":
+  [
+    {
+      "name": "huevos",
+      "image": "huevos.png",
+      "icon": "huevos-small.png"
+    },
+    {
+      "name": "crustaceos",
+      "image": "crustaceos.png",
+      "icon": "crustaceos-small.png"
+    },
+    {
+      "name": "cacahuetes",
+      "image": "cacahuetes.png",
+      "icon": "cacahuetes-small.png"
+    },
+    {
+      "name": "gluten",
+      "image": "gluten.png",
+      "icon": "gluten-small.png"
+    },
+    {
+      "name": "pescado",
+      "image": "pescado.png",
+      "icon": "pescado-small.png"
+    },
+    {
+      "name": "soja",
+      "image": "soja.png",
+      "icon": "soja-small.png"
+    }
+  ]
+}

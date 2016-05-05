@@ -5,18 +5,31 @@ import java.util.LinkedList;
 
 public class Table implements Serializable {
     private int mId;
-    private String mName;
     private LinkedList<Dish> mDishes;
+    private boolean mBillStatus;
+    private double mBill;
 
-    public Table(int id, String name) {
-        mId = id;
-        mName = name;
+    public double getBill() {
+        return mBill;
     }
 
-    public Table(int id, String name, LinkedList<Dish> Dishes) {
-        mId = id;
-        mName = name;
-        mDishes = Dishes;
+    public void setBill(double bill) {
+        this.mBill = bill;
+    }
+
+    public Table(int id, LinkedList<Dish> dishes, boolean billStatus, double bill) {
+        this.mId = id;
+        this.mDishes = dishes;
+        this.mBillStatus = billStatus;
+        this.mBill = bill;
+    }
+
+    public boolean getBuildStatus() {
+        return mBillStatus;
+    }
+
+    public void setBuildStatus(boolean buildStatus) {
+        this.mBillStatus = buildStatus;
     }
 
     public int getId() {
@@ -25,14 +38,6 @@ public class Table implements Serializable {
 
     public void setId(int id) {
         mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
     }
 
     public LinkedList<Dish> getDishes() {
@@ -45,6 +50,6 @@ public class Table implements Serializable {
 
     @Override
     public String toString() {
-        return getName();
+        return String.format("Mesa nº - %d: pagado: %s", mId, mBillStatus ? "SI" : "NO");
     }
 }

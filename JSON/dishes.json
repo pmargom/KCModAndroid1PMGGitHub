@@ -1,0 +1,69 @@
+{
+  "total": 9,
+  "platos":
+  [
+    {
+      "id": 1,
+      "name": "Barbacoa",
+      "price": 7.00,
+      "photo": "barbacoa.png",
+      "allergens": ["gluten", "pescado", "soja"]
+    },
+    {
+      "id": 2,
+      "name": "cabramelizada",
+      "price": 6.75,
+      "photo": "cabramelizada.png",
+      "allergens": ["huevos", "crustaceos", "cacahuetes", "gluten", "pescado", "soja"]
+    },
+    {
+      "id": 3,
+      "name": "cremozza",
+      "price": 9.25,
+      "photo": "cremozza.png",
+      "allergens": []
+    },
+    {
+      "id": 4,
+      "name": "cuatroquesos",
+      "price": 8.60,
+      "photo": "cuatroquesos.png",
+      "allergens": []
+    },
+    {
+      "id": 5,
+      "name": "gomipizza",
+      "price": 5.90,
+      "photo": "gomipizza.png",
+      "allergens": ["gluten", "soja"]
+    },
+    {
+      "id": 6,
+      "name": "mar_tierra",
+      "price": 12.00,
+      "photo": "mar_tierra.png",
+      "allergens": ["huevos", "crustaceos", "pescado"]
+    },
+    {
+      "id": 7,
+      "name": "parrilla",
+      "price": 10.50,
+      "photo": "parrilla.png",
+      "allergens":["huevos"]
+    },
+    {
+      "id": 8,
+      "name": "pecado",
+      "price": 9.00,
+      "photo": "pecado.png",
+      "allergens":["huevos", "crustaceos", "pescado"]
+    },
+    {
+      "id": 9,
+      "name": "pepperoni",
+      "price": 8.15,
+      "photo": "pepperoni.png",
+      "allergens":["huevos", "cacahuetes", "soja"]
+    }
+  ]
+}

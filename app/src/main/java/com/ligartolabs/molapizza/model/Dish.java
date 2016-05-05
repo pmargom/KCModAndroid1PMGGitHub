@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Dish implements Serializable {
-    private float mId;
+    private double mId;
     private String mName;
-    private float mPrice;
-    private int mPhoto;
-    private LinkedList<Allergen> mAllergens;
+    private double mPrice;
+    private String mPhoto;
+    private LinkedList<String> mAllergens;
 
 
-    public Dish(float id, String name, float price, int photo, LinkedList<Allergen> allergens) {
+    public Dish(double id, String name, double price, String photo, LinkedList<String> allergens) {
         mId = id;
         mName = name;
         mPrice = price;
@@ -19,11 +19,11 @@ public class Dish implements Serializable {
         mAllergens = allergens;
     }
 
-    public float getId() {
+    public double getId() {
         return mId;
     }
 
-    public void setId(float id) {
+    public void setId(double id) {
         mId = id;
     }
 
@@ -35,27 +35,27 @@ public class Dish implements Serializable {
         mName = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return mPrice;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         mPrice = price;
     }
 
-    public int getPhoto() {
+    public String getPhoto() {
         return mPhoto;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(String photo) {
         mPhoto = photo;
     }
 
-    public LinkedList<Allergen> getmAllergens() {
+    public LinkedList<String> getmAllergens() {
         return mAllergens;
     }
 
-    public void setmAllergens(LinkedList<Allergen> mAllergens) {
+    public void setmAllergens(LinkedList<String> mAllergens) {
         this.mAllergens = mAllergens;
     }
 }

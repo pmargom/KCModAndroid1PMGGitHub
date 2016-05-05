@@ -1,0 +1,69 @@
+{
+  "tables": [
+    {
+      "bill": 0,
+      "id": 1,
+      "dishes": [],
+      "billStatus": false
+    },
+    {
+      "bill": 13.75,
+      "id": 2,
+      "dishes": [
+        {
+          "allergens": [
+            "gluten",
+            "pescado",
+            "soja"
+          ],
+          "photo": "barbacoa.png",
+          "price": 7,
+          "id": 1,
+          "name": "Barbacoa"
+        },
+        {
+          "allergens": [
+            "huevos",
+            "crustaceos",
+            "cacahuetes",
+            "gluten",
+            "pescado",
+            "soja"
+          ],
+          "photo": "cabramelizada.png",
+          "price": 6.75,
+          "id": 2,
+          "name": "cabramelizada"
+        }
+      ],
+      "billStatus": true
+    },
+    {
+      "bill": 13.75,
+      "id": 3,
+      "dishes": [],
+      "billStatus": false
+    },
+    {
+      "bill": 0,
+      "id": 4,
+      "dishes": [],
+      "billStatus": false
+    },
+    {
+      "bill": 0,
+      "id": 5,
+      "dishes": [],
+      "billStatus": false
+    },
+    {
+      "bill": 0,
+      "id": 6,
+      "dishes": [],
+      "billStatus": false
+    }
+  ],
+  "total": 6,
+  "id": 1
+}
+
