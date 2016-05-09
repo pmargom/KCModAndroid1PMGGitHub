@@ -50,6 +50,9 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.huevos_name)
     TextView dishHuevosTextView;
 
+    @Bind(R.id.dish_quantity)
+    TextView dishQuantityTextView;
+
     public DishRowViewHolder(View rowDish) {
         super(rowDish);
 
@@ -65,7 +68,7 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setDishPrice(double price) {
-        dishPriceTextView.setText(price + "€");
+        dishPriceTextView.setText("€" + price);
     }
 
     public void setDishAllergens(LinkedList<String> allergens) {
@@ -95,6 +98,10 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
             dishCrustaceosTextView.setVisibility(View.GONE);
         }
 
+    }
+
+    public void setDishQuantity(int quantity) {
+        dishQuantityTextView.setText(quantity + "");
     }
 
 }

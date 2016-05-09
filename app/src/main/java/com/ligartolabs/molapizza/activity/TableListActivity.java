@@ -73,7 +73,7 @@ public class TableListActivity extends AppCompatActivity {
 
     private void addNewTable() {
         int newId = restaurant.getTables().getLast().getId() + 1;
-        restaurant.addNewTable(new Table(newId, new LinkedList<Dish>(), false, 0));
+        restaurant.addNewTable(new Table(newId, new LinkedList<Dish>(), false));
         updateUI();
     }
 
@@ -130,7 +130,6 @@ public class TableListActivity extends AppCompatActivity {
                     for (int i = 0; i < tables.length(); i++) {
                         JSONObject tableObject = tables.getJSONObject(i);
                         int idTable = tableObject.getInt("id");
-                        double bill = tableObject.getDouble("bill");
                         boolean billStatus = tableObject.getBoolean("billStatus");
                         JSONArray dishesJSONArray = tableObject.getJSONArray("dishes");
                         LinkedList<Dish> dishes = new LinkedList<>();
@@ -145,9 +144,10 @@ public class TableListActivity extends AppCompatActivity {
                             for (int k = 0; k < allergensJSONArray.length(); k++) {
                                 allergens.add(allergensJSONArray.getString(k));
                             }
-                            dishes.add(new Dish(idDish, name, price, buildDrawableForName(photo), allergens));
+                            int quantity = element.getInt("quantity");
+                            dishes.add(new Dish(idDish, name, price, buildDrawableForName(photo), allergens, quantity));
                         }
-                        restaurant.addNewTable(new Table(idTable, dishes, billStatus, bill));
+                        restaurant.addNewTable(new Table(idTable, dishes, billStatus));
                     }
                     return restaurant.getTables();
                 } catch (Exception e) {
@@ -227,8 +227,7 @@ public class TableListActivity extends AppCompatActivity {
                         for (int k = 0; k < allergensJSONArray.length(); k++) {
                             allergens.add(allergensJSONArray.getString(k));
                         }
-
-                        dishes.add(new Dish(id, name, price, buildDrawableForName(photo), allergens));
+                        dishes.add(new Dish(id, name, price, buildDrawableForName(photo), allergens, 0));
                     }
                     restaurant.setDishes(dishes);
                     return restaurant.getDishes();

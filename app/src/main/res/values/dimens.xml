@@ -10,4 +10,5 @@
     <dimen name="allergen_image_height">30dp</dimen>
     <dimen name="allergen_text_left_padding">8dp</dimen>
     <dimen name="allergen_text_top_padding">6dp</dimen>
+    <dimen name="dish_unit_padding_left">5dp</dimen>
 </resources>

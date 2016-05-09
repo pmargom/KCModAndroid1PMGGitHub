@@ -5,4 +5,4 @@ dishes
   http://www.mocky.io/v2/572b7d36130000da14e2b873
 
 tables
-  http://www.mocky.io/v2/5730512c120000fd0086380e
+  http://www.mocky.io/v2/573054c01200004301863810

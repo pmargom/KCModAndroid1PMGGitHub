@@ -4,6 +4,6 @@
     <string name="activity_table_details_name">Table details</string>
     <string name="dish_details_description">Top image description</string>
     <string name="dish_details_name">Pizza Barbacoa</string>
-    <string name="dish_details_price">price</string>
-    <string name="dish_details_units">Units:</string>
+    <string name="dish_details_price">€12.50</string>
+    <string name="dish_details_units">units</string>
 </resources>
