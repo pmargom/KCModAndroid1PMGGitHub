@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">MolaPizza</string>
+    <string name="app_name">Mola Pizza</string>
+    <string name="activity_table_list_name">Table list</string>
+    <string name="activity_table_details_name">Table details</string>
+    <string name="dish_details_description">Top image description</string>
+    <string name="dish_details_name">Pizza Barbacoa</string>
+    <string name="dish_details_price">price</string>
 </resources>

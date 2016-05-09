@@ -7,4 +7,7 @@
     <dimen name="text_size">16sp</dimen>
     <dimen name="test_margin_minimum">5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="allergen_image_height">30dp</dimen>
+    <dimen name="allergen_text_left_padding">8dp</dimen>
+    <dimen name="allergen_text_top_padding">6dp</dimen>
 </resources>

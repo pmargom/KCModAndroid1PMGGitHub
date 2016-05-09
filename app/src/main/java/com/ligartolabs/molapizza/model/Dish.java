@@ -1,5 +1,7 @@
 package com.ligartolabs.molapizza.model;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -7,11 +9,11 @@ public class Dish implements Serializable {
     private double mId;
     private String mName;
     private double mPrice;
-    private String mPhoto;
+    private Drawable mPhoto;
     private LinkedList<String> mAllergens;
 
 
-    public Dish(double id, String name, double price, String photo, LinkedList<String> allergens) {
+    public Dish(double id, String name, double price, Drawable photo, LinkedList<String> allergens) {
         mId = id;
         mName = name;
         mPrice = price;
@@ -43,15 +45,15 @@ public class Dish implements Serializable {
         mPrice = price;
     }
 
-    public String getPhoto() {
+    public Drawable getPhoto() {
         return mPhoto;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Drawable photo) {
         mPhoto = photo;
     }
 
-    public LinkedList<String> getmAllergens() {
+    public LinkedList<String> getAllergens() {
         return mAllergens;
     }
 
