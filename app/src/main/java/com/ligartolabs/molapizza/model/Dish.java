@@ -11,14 +11,24 @@ public class Dish implements Serializable {
     private double mPrice;
     private Drawable mPhoto;
     private LinkedList<String> mAllergens;
+    private int mQuantity;
 
+    public int getQuantity() {
+        return mQuantity;
+    }
 
-    public Dish(double id, String name, double price, Drawable photo, LinkedList<String> allergens) {
+    public void setQuantity(int quantity) {
+        this.mQuantity = quantity;
+    }
+
+    public Dish(double id, String name, double price, Drawable photo, LinkedList<String> allergens, int quantity) {
         mId = id;
         mName = name;
         mPrice = price;
         mPhoto = photo;
         mAllergens = allergens;
+        mQuantity = quantity;
+
     }
 
     public double getId() {

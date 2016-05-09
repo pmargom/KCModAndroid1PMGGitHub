@@ -29,13 +29,46 @@
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/dish_name"
+                android:id="@+id/dish_price"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dish_details_price"
+                android:layout_below="@id/dish_image"
+                android:gravity="left"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold"
+                android:textColor="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/dish_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dish_details_name"
                 android:layout_below="@id/dish_image"
+                android:layout_toEndOf="@id/dish_price"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold"
+                android:paddingLeft="@dimen/dish_unit_padding_left"
+                android:textColor="@android:color/darker_gray"
+                android:layout_toRightOf="@id/dish_price" />
+
+            <TextView
+                android:id="@+id/dish_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:layout_below="@id/dish_name"
+                android:gravity="left"
+                android:textColor="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/dish_units"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dish_details_units"
+                android:layout_below="@id/dish_name"
+                android:paddingLeft="@dimen/dish_unit_padding_left"
+                android:layout_toRightOf="@id/dish_quantity"
                 android:textColor="@android:color/darker_gray"/>
 
             <LinearLayout
@@ -205,17 +238,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/dish_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dish_details_price"
-                android:layout_below="@id/dish_image"
-                android:gravity="end"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:textStyle="bold"
-                android:textColor="@android:color/darker_gray"/>
 
         </RelativeLayout>
 

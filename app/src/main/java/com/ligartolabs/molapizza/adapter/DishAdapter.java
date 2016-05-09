@@ -37,6 +37,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishRowViewHolder> {
         holder.setDishName(dish.getName());
         holder.setDishPrice(dish.getPrice());
         holder.setDishAllergens(dish.getAllergens());
+        holder.setDishQuantity(dish.getQuantity());
     }
 
     @Override

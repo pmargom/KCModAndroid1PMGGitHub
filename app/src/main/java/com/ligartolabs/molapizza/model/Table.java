@@ -10,18 +10,25 @@ public class Table implements Serializable {
     private double mBill;
 
     public double getBill() {
+
         return mBill;
     }
 
-    public void setBill(double bill) {
-        this.mBill = bill;
+    private double calculateBill() {
+        if (mDishes == null || mDishes.size() == 0) return 0;
+
+        double accumulateValue = 0;
+        for (Dish dish: mDishes) {
+            accumulateValue += dish.getPrice() * dish.getQuantity();
+        }
+        return accumulateValue;
     }
 
-    public Table(int id, LinkedList<Dish> dishes, boolean billStatus, double bill) {
+    public Table(int id, LinkedList<Dish> dishes, boolean billStatus) {
         this.mId = id;
         this.mDishes = dishes;
         this.mBillStatus = billStatus;
-        this.mBill = bill;
+        this.mBill = calculateBill();
     }
 
     public boolean getBuildStatus() {
@@ -50,6 +57,6 @@ public class Table implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Mesa nº - %d: pagado: %s", mId, mBillStatus ? "SI" : "NO");
+        return String.format("Mesa nº - %d: Paid: %s -> Bill: €%.2f", mId, mBillStatus ? "YES" : "NO ", mBill);
     }
 }

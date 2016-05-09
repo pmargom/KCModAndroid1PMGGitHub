@@ -1,13 +1,11 @@
 {
   "tables": [
     {
-      "bill": 0,
       "id": 1,
       "dishes": [],
       "billStatus": false
     },
     {
-      "bill": 13.75,
       "id": 2,
       "dishes": [
         {
@@ -19,7 +17,8 @@
           "photo": "barbacoa.png",
           "price": 7,
           "id": 1,
-          "name": "Barbacoa"
+          "name": "Barbacoa",
+          "quantity": 2
         },
         {
           "allergens": [
@@ -33,33 +32,43 @@
           "photo": "cabramelizada.png",
           "price": 6.75,
           "id": 2,
-          "name": "cabramelizada"
+          "name": "cabramelizada",
+          "quantity": 1
         }
       ],
       "billStatus": true
     },
     {
-      "bill": 13.75,
       "id": 3,
       "dishes": [],
       "billStatus": false
     },
     {
-      "bill": 0,
       "id": 4,
       "dishes": [],
       "billStatus": false
     },
     {
-      "bill": 0,
       "id": 5,
       "dishes": [],
       "billStatus": false
     },
     {
-      "bill": 0,
       "id": 6,
-      "dishes": [],
+      "dishes": [
+        {
+          "allergens": [
+            "gluten",
+            "pescado",
+            "soja"
+          ],
+          "photo": "gomipizza.png",
+          "price": 7,
+          "id": 1,
+          "name": "Gomipizza",
+          "quantity": 1
+        }
+      ],
       "billStatus": false
     }
   ],
