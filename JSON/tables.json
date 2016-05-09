@@ -19,7 +19,8 @@
           "photo": "barbacoa.png",
           "price": 7,
           "id": 1,
-          "name": "Barbacoa"
+          "name": "Barbacoa",
+          "units": 2
         },
         {
           "allergens": [
@@ -33,7 +34,8 @@
           "photo": "cabramelizada.png",
           "price": 6.75,
           "id": 2,
-          "name": "cabramelizada"
+          "name": "cabramelizada",
+          "units": 1
         }
       ],
       "billStatus": true
@@ -59,11 +61,23 @@
     {
       "bill": 0,
       "id": 6,
-      "dishes": [],
+      "dishes": [
+        {
+          "allergens": [
+            "gluten",
+            "pescado",
+            "soja"
+          ],
+          "photo": "gomipizza.png",
+          "price": 7,
+          "id": 1,
+          "name": "Gomipizza",
+          "units": 1
+        }
+      ],
       "billStatus": false
     }
   ],
   "total": 6,
   "id": 1
 }
-
