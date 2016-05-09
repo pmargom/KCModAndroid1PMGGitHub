@@ -17,11 +17,19 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_add_dish"
+        android:id="@+id/table_details_activity_button_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/money"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/table_details_activity_button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_plus"/>
+        android:src="@drawable/ic_plus" />
 
 </android.support.design.widget.CoordinatorLayout>

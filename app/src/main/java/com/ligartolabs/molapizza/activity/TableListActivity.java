@@ -30,10 +30,10 @@ import com.ligartolabs.molapizza.R;
 
 public class TableListActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 100;
     private ArrayAdapter<Table> mAdapter;
     private Restaurant restaurant;
     private ListView mTableListView;
-    private final int ACTIVITY_TABLE_DETAILS = 1;
 
     private void setupModel() {
         restaurant = Restaurant.getInstance();
@@ -57,6 +57,9 @@ public class TableListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setupButtons() {
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.table_list_activity_button_add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +71,7 @@ public class TableListActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        mAdapter.notifyDataSetChanged();;
+        mAdapter.notifyDataSetChanged();
     }
 
     private void addNewTable() {
@@ -83,9 +86,8 @@ public class TableListActivity extends AppCompatActivity {
 
         setupModel();
         setupUI();
-
+        setupButtons();
         downloadMenu();
-
         downloadTables();
     }
 
@@ -267,9 +269,18 @@ public class TableListActivity extends AppCompatActivity {
     void loadTableDetails(Table table) {
         Intent tableDetailsIntent = new Intent(this, TableDetailsActivity.class);
         tableDetailsIntent.putExtra(TableDetailsActivity.EXTRA_TABLE, table.getId() - 1);
-        startActivity(tableDetailsIntent);
+        startActivityForResult(tableDetailsIntent, REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                updateUI();
+            }
+        }
+    }
 }
 
 
