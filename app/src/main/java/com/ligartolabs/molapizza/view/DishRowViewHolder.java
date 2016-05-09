@@ -68,7 +68,7 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setDishPrice(double price) {
-        dishPriceTextView.setText("€" + price);
+        dishPriceTextView.setText(Constants.formatMoney(price));
     }
 
     public void setDishAllergens(LinkedList<String> allergens) {

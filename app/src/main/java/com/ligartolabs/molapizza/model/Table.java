@@ -1,5 +1,7 @@
 package com.ligartolabs.molapizza.model;
 
+import com.ligartolabs.molapizza.global.Constants;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -57,6 +59,6 @@ public class Table implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Mesa nº - %d: Paid: %s -> Bill: €%.2f", mId, mBillStatus ? "YES" : "NO ", mBill);
+        return String.format("Mesa nº - %d: Paid: %s -> Bill: %s", mId, mBillStatus ? "YES" : "NO ", Constants.formatMoney(mBill));
     }
 }
