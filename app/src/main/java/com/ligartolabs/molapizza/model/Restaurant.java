@@ -24,9 +24,11 @@ public class Restaurant {
     }
 
     public void addNewTable(Table table) {
-
         mTables.add(table);
+    }
 
+    public void payBill(Table table) {
+        table.setBuildStatus(true);
     }
 
     public LinkedList<Table> getTables() {

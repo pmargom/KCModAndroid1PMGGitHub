@@ -37,7 +37,7 @@ public class Table implements Serializable {
         return mBillStatus;
     }
 
-    public void setBuildStatus(boolean buildStatus) {
+    protected void setBuildStatus(boolean buildStatus) {
         this.mBillStatus = buildStatus;
     }
 

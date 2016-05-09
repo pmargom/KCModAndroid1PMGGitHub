@@ -19,7 +19,7 @@
                 android:id="@+id/dish_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/barbacoa"
+                android:src="@drawable/gomipizza"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:adjustViewBounds="true"
