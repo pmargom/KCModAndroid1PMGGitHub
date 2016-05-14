@@ -272,9 +272,9 @@ public class TableListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
 
-                mRestaurant.setTables(Restaurant.getInstance().getTables());
+                //mRestaurant.setTables(Restaurant.getInstance().getTables());
                 updateUI();
             }
         }

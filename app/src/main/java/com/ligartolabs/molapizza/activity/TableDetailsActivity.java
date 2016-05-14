@@ -47,16 +47,9 @@ public class TableDetailsActivity extends AppCompatActivity {
 
         mFragmentManager = getFragmentManager();
         mFragment = mFragmentManager.findFragmentById(R.id.fragment_list_dish);
-//        if (mFragment == null) {
-//            mFragmentManager.beginTransaction()
-//                    .add(R.id.fragment_list_dish, mDishFragment)
-//                    .commit();
-//        }
-//        else {
-            mFragmentManager.beginTransaction()
-                    .add(R.id.fragment_list_dish, mDishFragment)
-                    .commit();
-        //}
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_list_dish, mDishFragment)
+                .commit();
 
     }
 
@@ -109,8 +102,6 @@ public class TableDetailsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 setupUI();
                 setupButtons();
-//                setResult(RESULT_OK);
-//                finish();
             }
         }
     }

@@ -88,7 +88,8 @@ public class DishFragment extends Fragment implements DishAdapter.OnDishClickLis
     @Override
     public void onDishClick(Dish dish, View view) {
         Log.d("", "onDishClick: ");
-        Restaurant.getInstance().getTable(mTableId).getDishes().add(dish);
+        dish.setQuantity(1);
+        Restaurant.getInstance().getTable(mTableId).addNewDish(dish);
         closefragment();
 
     }
