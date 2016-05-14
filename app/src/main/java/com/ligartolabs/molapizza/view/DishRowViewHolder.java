@@ -1,13 +1,17 @@
 package com.ligartolabs.molapizza.view;
 
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ligartolabs.molapizza.R;
+import com.ligartolabs.molapizza.adapter.DishAdapter;
 import com.ligartolabs.molapizza.global.Constants;
+import com.ligartolabs.molapizza.global.Utils;
+import com.ligartolabs.molapizza.model.Dish;
 
 import java.util.LinkedList;
 
@@ -15,6 +19,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DishRowViewHolder extends RecyclerView.ViewHolder {
+
+    private Utils mUtils;
+    private Dish mDish;
 
     @Bind(R.id.dish_name)
     TextView dishNameTextView;
@@ -53,26 +60,28 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.dish_quantity)
     TextView dishQuantityTextView;
 
-    public DishRowViewHolder(View rowDish) {
-        super(rowDish);
+    public DishRowViewHolder(final View itemView, final DishAdapter.OnDishClickListener parentClickListener) {
+        super(itemView);
+        mUtils = new Utils();
+        ButterKnife.bind(this, itemView);
 
-        ButterKnife.bind(this, rowDish);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("DishAdapter", "han hecho click");
+                parentClickListener.onDishClick(mDish, v);
+            }
+        });
     }
 
-    public void setDishName(String name) {
-        dishNameTextView.setText(name);
-    }
+    public void bindDish(Dish dish, Context context) {
 
-    public void setDishImage(Drawable image) {
-        dishImage.setImageDrawable(image);
-    }
+        mDish = dish;
 
-    public void setDishPrice(double price) {
-        dishPriceTextView.setText(Constants.formatMoney(price));
-    }
-
-    public void setDishAllergens(LinkedList<String> allergens) {
-
+        dishNameTextView.setText(dish.getName());
+        dishImage.setImageDrawable(mUtils.buildDrawableForName(dish.getPhoto(), context));
+        dishPriceTextView.setText(mUtils.formatMoney(dish.getPrice()));
+        LinkedList<String> allergens = dish.getAllergens();
         if (!allergens.contains(Constants.Allergens.cacahuetes.toString())) {
             dishImageCacahuetes.setVisibility(View.GONE);
             dishCacahuetesTextView.setVisibility(View.GONE);
@@ -98,10 +107,7 @@ public class DishRowViewHolder extends RecyclerView.ViewHolder {
             dishCrustaceosTextView.setVisibility(View.GONE);
         }
 
-    }
-
-    public void setDishQuantity(int quantity) {
-        dishQuantityTextView.setText(quantity + "");
+        dishQuantityTextView.setText(dish.getQuantity() + "");
     }
 
 }

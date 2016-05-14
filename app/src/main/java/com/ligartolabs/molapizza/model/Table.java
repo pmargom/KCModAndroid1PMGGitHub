@@ -1,6 +1,7 @@
 package com.ligartolabs.molapizza.model;
 
 import com.ligartolabs.molapizza.global.Constants;
+import com.ligartolabs.molapizza.global.Utils;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -13,24 +14,24 @@ public class Table implements Serializable {
 
     public double getBill() {
 
+        updateBill();
         return mBill;
     }
 
-    private double calculateBill() {
-        if (mDishes == null || mDishes.size() == 0) return 0;
+    private void updateBill() {
+        if (mDishes == null || mDishes.size() == 0) return;
 
-        double accumulateValue = 0;
+        mBill = 0;
         for (Dish dish: mDishes) {
-            accumulateValue += dish.getPrice() * dish.getQuantity();
+            mBill += dish.getPrice() * dish.getQuantity();
         }
-        return accumulateValue;
     }
 
     public Table(int id, LinkedList<Dish> dishes, boolean billStatus) {
         this.mId = id;
         this.mDishes = dishes;
         this.mBillStatus = billStatus;
-        this.mBill = calculateBill();
+        updateBill();
     }
 
     public boolean getBuildStatus() {
@@ -57,8 +58,13 @@ public class Table implements Serializable {
         mDishes = dishes;
     }
 
+    public void addNewDish(Dish dish) {
+        mDishes.add(dish);
+        updateBill();
+    }
+
     @Override
     public String toString() {
-        return String.format("Mesa nº - %d: Paid: %s -> Bill: %s", mId, mBillStatus ? "YES" : "NO ", Constants.formatMoney(mBill));
+        return String.format("Mesa nº - %d: Paid: %s -> Bill: %s", mId, mBillStatus ? "YES" : "NO ", new Utils().formatMoney(mBill));
     }
 }

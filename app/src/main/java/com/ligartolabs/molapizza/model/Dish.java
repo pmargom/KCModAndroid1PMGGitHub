@@ -9,7 +9,7 @@ public class Dish implements Serializable {
     private double mId;
     private String mName;
     private double mPrice;
-    private Drawable mPhoto;
+    private String mPhoto;
     private LinkedList<String> mAllergens;
     private int mQuantity;
 
@@ -21,7 +21,7 @@ public class Dish implements Serializable {
         this.mQuantity = quantity;
     }
 
-    public Dish(double id, String name, double price, Drawable photo, LinkedList<String> allergens, int quantity) {
+    public Dish(double id, String name, double price, String photo, LinkedList<String> allergens, int quantity) {
         mId = id;
         mName = name;
         mPrice = price;
@@ -55,11 +55,11 @@ public class Dish implements Serializable {
         mPrice = price;
     }
 
-    public Drawable getPhoto() {
+    public String getPhoto() {
         return mPhoto;
     }
 
-    public void setPhoto(Drawable photo) {
+    public void setPhoto(String photo) {
         mPhoto = photo;
     }
 

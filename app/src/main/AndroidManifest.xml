@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TableDetailsActivity"/>
+        <activity android:name=".activity.AddDishActivity" />
     </application>
 
 </manifest>

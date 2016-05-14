@@ -1,7 +1,6 @@
 package com.ligartolabs.molapizza.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,11 +31,12 @@ public class TableListActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 100;
     private ArrayAdapter<Table> mAdapter;
-    private Restaurant restaurant;
+    private Restaurant mRestaurant;
     private ListView mTableListView;
+    private int mTableId;
 
     private void setupModel() {
-        restaurant = Restaurant.getInstance();
+        mRestaurant = Restaurant.getInstance();
     }
 
     private void setupUI() {
@@ -44,7 +44,7 @@ public class TableListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_table_list);
         mTableListView = (ListView) findViewById(R.id.tables_list);
 
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, restaurant.getTables());
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mRestaurant.getTables());
 
         mTableListView.setAdapter(mAdapter);
 
@@ -53,7 +53,8 @@ public class TableListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             // Get the table selected and try to load table details
-            loadTableDetails(restaurant.getTables().get(position));
+            mTableId = position + 1;
+            loadTableDetails(mRestaurant.getTables().get(position));
             }
         });
 
@@ -75,8 +76,8 @@ public class TableListActivity extends AppCompatActivity {
     }
 
     private void addNewTable() {
-        int newId = restaurant.getTables().getLast().getId() + 1;
-        restaurant.addNewTable(new Table(newId, new LinkedList<Dish>(), false));
+        int newId = mRestaurant.getTables().getLast().getId() + 1;
+        mRestaurant.addNewTable(new Table(newId, new LinkedList<Dish>(), false));
         updateUI();
     }
 
@@ -147,11 +148,13 @@ public class TableListActivity extends AppCompatActivity {
                                 allergens.add(allergensJSONArray.getString(k));
                             }
                             int quantity = element.getInt("quantity");
-                            dishes.add(new Dish(idDish, name, price, buildDrawableForName(photo), allergens, quantity));
+
+                            dishes.add(new Dish(idDish, name, price, photo, allergens, quantity));
                         }
-                        restaurant.addNewTable(new Table(idTable, dishes, billStatus));
+                        mRestaurant.addNewTable(new Table(idTable, dishes, billStatus));
                     }
-                    return restaurant.getTables();
+                    return mRestaurant.getTables();
+                    //return mRestaurant.getTables();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -173,6 +176,7 @@ public class TableListActivity extends AppCompatActivity {
                 if (tables.size() == 0) {
                     Snackbar.make(findViewById(android.R.id.content), "There are no tables active at the moment.", Snackbar.LENGTH_LONG).show();
                 } else {
+                    mRestaurant.setTables(tables);
                     updateUI();
                 }
             }
@@ -229,10 +233,9 @@ public class TableListActivity extends AppCompatActivity {
                         for (int k = 0; k < allergensJSONArray.length(); k++) {
                             allergens.add(allergensJSONArray.getString(k));
                         }
-                        dishes.add(new Dish(id, name, price, buildDrawableForName(photo), allergens, 0));
+                        dishes.add(new Dish(id, name, price, photo, allergens, 0));
                     }
-                    restaurant.setDishes(dishes);
-                    return restaurant.getDishes();
+                    return dishes;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -251,19 +254,12 @@ public class TableListActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(LinkedList<Dish> dishes) {
                 super.onPostExecute(dishes);
-
+                mRestaurant.setDishes(dishes);
                 Snackbar.make(findViewById(android.R.id.content), "Restaurant dish list and active tables downloaded.", Snackbar.LENGTH_LONG).show();
             }
         };
 
         menuDownloader.execute();
-    }
-
-    private Drawable buildDrawableForName(String imageName) {
-        String uri = "@drawable/" + imageName.replace(".png", "").replace(".jpg", "");
-        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-        Drawable resPhoto = getResources().getDrawable(imageResource);
-        return resPhoto;
     }
 
     void loadTableDetails(Table table) {
@@ -276,7 +272,9 @@ public class TableListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+
+                //mRestaurant.setTables(Restaurant.getInstance().getTables());
                 updateUI();
             }
         }
