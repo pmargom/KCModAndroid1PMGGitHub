@@ -43,8 +43,8 @@ public class Restaurant {
         return mDishes;
     }
 
-    public void setDishes(LinkedList<Dish> Dishes) {
-        this.mDishes = mDishes;
+    public void setDishes(LinkedList<Dish> dishes) {
+        this.mDishes = dishes;
     }
 
     public Table getTable(int position) {

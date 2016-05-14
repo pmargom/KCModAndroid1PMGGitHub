@@ -1,11 +1,12 @@
 package com.ligartolabs.molapizza.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -20,52 +21,58 @@ import java.util.LinkedList;
 public class TableDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_TABLE = "com.ligartolabs.molapizza.activity.TableDetailsActivity.EXTRA_TABLE";
+    public static final int REQUEST_CODE = 100;
     private Table mTable;
 
     DishFragment mDishFragment;
     private FloatingActionButton mPayButton;
     private FloatingActionButton mAddButton;
-    private LinkedList<Dish> mTableDishes;
+    private int mTableId;
+    private FragmentManager mFragmentManager;
+    private Fragment mFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setupUI();
         setupButtons();
     }
 
     private void setupUI() {
         setContentView(R.layout.activity_table_details);
+        mTableId = getIntent().getIntExtra(EXTRA_TABLE, 0);
 
-        int tableId = getIntent().getIntExtra(EXTRA_TABLE, 0);
-        mTable = Restaurant.getInstance().getTable(tableId);
+        mDishFragment = DishFragment.newInstance(mTableId, false);
 
-        mTableDishes = mTable.getDishes();
-
-        mDishFragment = DishFragment.newInstance(mTableDishes);
-
-        FragmentManager fm = getFragmentManager();
-        if (fm.findFragmentById(R.id.fragment_list_dish) == null) {
-            fm.beginTransaction()
+        mFragmentManager = getFragmentManager();
+        mFragment = mFragmentManager.findFragmentById(R.id.fragment_list_dish);
+//        if (mFragment == null) {
+//            mFragmentManager.beginTransaction()
+//                    .add(R.id.fragment_list_dish, mDishFragment)
+//                    .commit();
+//        }
+//        else {
+            mFragmentManager.beginTransaction()
                     .add(R.id.fragment_list_dish, mDishFragment)
                     .commit();
-        }
+        //}
 
     }
 
     private void setupButtons() {
 
+        mTable = Restaurant.getInstance().getTable(mTableId);
+        LinkedList<Dish> dishes = mTable.getDishes();
         boolean buildStatus = mTable.getBuildStatus();
-        boolean tableHasItems = mTableDishes != null && mTableDishes.size() > 0;
+        boolean tableHasItems = dishes != null && dishes.size() > 0;
 
         mPayButton = (FloatingActionButton) findViewById(R.id.table_details_activity_button_pay);
         mPayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 payTable();
-                Snackbar.make(findViewById(android.R.id.content), "Table bill was done.", Snackbar.LENGTH_LONG).show();
             }
-
         });
 
         // If table does not have any dishes, the button must be hidden
@@ -75,8 +82,7 @@ public class TableDetailsActivity extends AppCompatActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            addNewDish();
-            Snackbar.make(findViewById(android.R.id.content), "New dish was added.", Snackbar.LENGTH_LONG).show();
+                addNewDish(mTable);
             }
         });
 
@@ -90,9 +96,23 @@ public class TableDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void addNewDish() {
-
+    void addNewDish(Table table) {
+        Intent addDishActivityIntent = new Intent(this, AddDishActivity.class);
+        addDishActivityIntent.putExtra(AddDishActivity.EXTRA_TABLE_ADD_DISH, table.getId() - 1);
+        startActivityForResult(addDishActivityIntent, REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                setupUI();
+                setupButtons();
+//                setResult(RESULT_OK);
+//                finish();
+            }
+        }
+    }
 
 }
